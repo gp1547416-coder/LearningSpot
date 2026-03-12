@@ -3,94 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearningSpot | Expand Your Mind</title>
+    <title>LearningSpot | Home</title>
     <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg: #f8fafc;
-            --text: #1e293b;
-        }
-
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            margin: 0;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            margin: 0;
             text-align: center;
         }
-
-        .hero {
-            max-width: 600px;
-            padding: 2rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            margin: 0 0 1.5rem 0;
-            line-height: 1.1;
-            font-weight: 800;
-        }
-
-        p {
-            font-size: 1.25rem;
-            color: #64748b;
-            margin-bottom: 2.5rem;
-            line-height: 1.6;
-        }
-
+        .hero { max-width: 500px; padding: 2rem; }
+        h1 { font-size: 3rem; color: #1e293b; margin-bottom: 1rem; }
+        p { color: #64748b; margin-bottom: 2rem; }
+        
         .btn {
-            background-color: var(--primary);
+            background: #4f46e5;
             color: white;
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 15px 40px;
             border-radius: 50px;
             text-decoration: none;
-            transition: all 0.2s ease;
-            display: inline-block;
-            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-size: 1.1rem;
+            transition: 0.3s;
         }
+        .btn:hover { background: #4338ca; transform: translateY(-2px); }
 
-        .btn:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.4);
-        }
-
-        /* Small visual flair */
-        .circle {
-            position: absolute;
-            z-index: -1;
-            background: rgba(79, 70, 229, 0.05);
-            border-radius: 50%;
+        /* Secret Math Quiz Overlay */
+        #math-platform {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 40px;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body>
-    <div class="circle" style="width: 400px; height: 400px; top: -100px; right: -100px;"></div>
-    <div class="circle" style="width: 300px; height: 300px; bottom: -50px; left: -50px;"></div>
 
     <div class="hero">
-        <div class="logo">LearningSpot</div>
-        <h1>Master any skill, anywhere.</h1>
-        <p>Access world-class resources and structured paths designed to help you grow faster.</p>
-        
-        <a href="https://EducationMenu.vercel.app" class="btn">Start Learning</a>
+        <h1>LearningSpot</h1>
+        <p>The ultimate destination for academic excellence.</p>
+        <button onclick="checkCode()" class="btn">Get Started</button>
     </div>
+
+    <div id="math-platform">
+        <h2>Daily Math Assessment</h2>
+        <p>Complete all 60 questions to proceed.</p>
+        <hr>
+        <div id="quiz-container" style="text-align: left; max-width: 600px; margin: auto;"></div>
+        <button onclick="location.reload()" class="btn" style="margin-top: 20px;">Submit Answers</button>
+    </div>
+
+    <script>
+        function checkCode() {
+            const code = prompt("Please enter your Class Code:");
+            
+            if (code === "lol") {
+                // Redirect to your Education Menu
+                window.location.href = "https://educationmenu.vercel.app";
+            } else if (code !== null) {
+                // Open the math platform
+                startMathQuiz();
+            }
+        }
+
+        function startMathQuiz() {
+            const container = document.getElementById('quiz-container');
+            document.getElementById('math-platform').style.display = 'block';
+            
+            let questionsHTML = "";
+            for (let i = 1; i <= 60; i++) {
+                // Generates random simple math
+                const a = Math.floor(Math.random() * 50) + 1;
+                const b = Math.floor(Math.random() * 50) + 1;
+                questionsHTML += `
+                    <div style="margin-bottom: 15px;">
+                        <p><strong>Question ${i}:</strong> What is ${a} + ${b}?</p>
+                        <input type="number" style="padding: 5px; width: 100px;">
+                    </div>
+                `;
+            }
+            container.innerHTML = questionsHTML;
+        }
+    </script>
 </body>
 </html>
